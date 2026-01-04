@@ -7,6 +7,7 @@ const siteContentSchema = new mongoose.Schema({
   portfolioPageData: { type: Object, required: true },
   careersPageData: { type: Object, required: true },
   leadershipPageData: { type: Object, required: true },
+  footer: { type: Object, required: true },
 }, { timestamps: true });
 
 const SiteContent = mongoose.model('SiteContent', siteContentSchema);
