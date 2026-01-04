@@ -48,13 +48,27 @@ export const uploadImage = (req, res) => {
     if (err) {
       return res.status(500).json({ message: 'Error uploading image' });
     }
+
     if (!req.file) {
       return res.status(400).json({ message: 'No image file provided' });
     }
-    res.json({ message: 'Image uploaded successfully' });
+
+    const uploadsDir = path.join(process.cwd(), 'uploads');
+    const filename = req.file.originalname;
+    const filePath = path.join(uploadsDir, filename);
+
+    if (fs.existsSync(filePath)) {
+      return res.json({
+        status: 'exists',
+        filename,
+      });
+    }
+    return res.json({
+      status: 'uploaded',
+      filename,
+    });
   });
 };
-
 export const deleteImage = (req, res) => {
   try {
     const imagePath = req.params.path;
