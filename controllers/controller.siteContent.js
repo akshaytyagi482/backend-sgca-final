@@ -13,11 +13,15 @@ export const getContent = async (req, res) => {
 };
 export const updateContent = async (req, res) => {
   try {
-    const updated = await SiteContent.findOneAndUpdate(
-      {},
+    const updated = await SiteContent.findByIdAndUpdate(
+      req.body._id,
       req.body,
-      { new: true, upsert: true }
+      {
+        new: true,
+        runValidators: true,
+      }
     );
+
     res.json(updated);
   } catch (err) {
     res.status(500).json({ message: err.message });
